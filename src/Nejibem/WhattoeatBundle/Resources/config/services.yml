@@ -1,0 +1,7 @@
+parameters:
+#    nejibem_whattoeat.example.class: Nejibem\WhattoeatBundle\Example
+
+services:
+#    nejibem_whattoeat.example:
+#        class: %nejibem_whattoeat.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,4 @@
+nejibem_whattoeat:
+    resource: "@NejibemWhattoeatBundle/Resources/config/routing.yml"
+    prefix:   /
+
