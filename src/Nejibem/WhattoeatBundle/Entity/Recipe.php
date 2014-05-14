@@ -186,7 +186,10 @@ class Recipe {
         }
         else
         {
-            return false;
+            $recipe = new Recipe();
+            $recipe->setName('Order Takeaway!');
+            $recipe->setRecommended(true);
+            return $recipe;
         }
     }
 } 

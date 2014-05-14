@@ -20,6 +20,8 @@
         "sensio/generator-bundle": "~2.3",
         "incenteev/composer-parameter-handler": "~2.0",
         "zendframework/zend-http": "2.3.0",
+        "braincrafted/bootstrap-bundle": "~2.0",
+        "twbs/bootstrap": "3.0.*",
         "phpunit/phpunit": "4.1.*"
     },
     "scripts": {

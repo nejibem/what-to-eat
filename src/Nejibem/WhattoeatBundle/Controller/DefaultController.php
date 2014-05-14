@@ -48,7 +48,7 @@ class DefaultController extends Controller
 
         $form = $this->createFormBuilder()
             ->add('ingredients_file', 'file', array('label' => 'Ingredients File to Submit'))
-            ->add('add', 'submit')
+            ->add('Submit Ingredients', 'submit')
             ->getForm();
 
         $form->handleRequest($request);
@@ -68,7 +68,10 @@ class DefaultController extends Controller
         }
 
         $recipies = $this->fetchRecipies( $availableIngredients );
-        $recommended = Recipe::calcWhatToEat($recipies);
+        if( count($availableIngredients) > 0 )
+        {
+            $recommended = Recipe::calcWhatToEat($recipies);
+        }
 
         $params = array( 'form'                 => $form->createView(),
                          'availableIngredients' => $availableIngredients,

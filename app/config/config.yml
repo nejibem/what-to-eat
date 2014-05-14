@@ -42,6 +42,22 @@ assetic:
         #yui_css:
         #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
 
+braincrafted_bootstrap:
+    output_dir:
+    assets_dir: %kernel.root_dir%/../vendor/twbs/bootstrap
+    jquery_path: %kernel.root_dir%/../vendor/jquery/jquery/jquery-1.10.2.js
+    less_filter: none # "less", "lessphp" or "none"
+    auto_configure:
+        assetic: true
+        twig: true
+        knp_menu: false
+        knp_paginator: false
+    customize:
+        variables_file: ~
+        bootstrap_output: %kernel.root_dir%/Resources/less/bootstrap.less
+        bootstrap_template: BraincraftedBootstrapBundle:Bootstrap:bootstrap.less.twig
+
+
 # Doctrine Configuration
 doctrine:
     dbal:

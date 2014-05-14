@@ -458,7 +458,12 @@ class DefaultControllerTest extends WebTestCase
         $recipe2->addIngredientAvailable( $availableIngredient4 );
         $recipies = array( $recipe1, $recipe2 );
 
-        $this->assertFalse( Recipe::calcWhatToEat($recipies) );
+        $expected = new Recipe();
+        $expected->setName('Order Takeaway!');
+        $expected->setRecommended(true);
+        $actual = Recipe::calcWhatToEat($recipies);
+
+        $this->assertEquals( $expected, $actual );
     }
 
 
