@@ -6,3 +6,6 @@ nejibem_whattoeat_recipes:
     pattern:  /recipes
     defaults: { _controller: NejibemWhattoeatBundle:Default:recipes }
 
+nejibem_whattoeat_whattoeat:
+    pattern:  /whattoeat
+    defaults: { _controller: NejibemWhattoeatBundle:Default:whattoeat }

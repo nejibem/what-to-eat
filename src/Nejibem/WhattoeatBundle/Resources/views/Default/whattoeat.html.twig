@@ -1,0 +1,38 @@
+whattoeat!
+
+{{ form(form) }}
+
+<h2>Recipies</h2>
+
+{% if recipies is not null %}
+
+    {% for recipe in recipies %}
+        <h3>{{ recipe.getName() }}</h3>
+    {% endfor %}
+
+{% endif %}
+
+<h2>Ingredients</h2>
+
+{% if ingredients is not null %}
+    <table class="table table-bordered">
+        <tr>
+            <th>Ingredient</th>
+            <th>Quantity</th>
+            <th>Unit</th>
+            <th>Used By Date</th>
+        </tr>
+        {% for ingredient in ingredients %}
+            <tr>
+                <td>{{ ingredient.getName() }} </td>
+                <td>{{ ingredient.getQuantity() }} </td>
+                <td>{{ ingredient.getUnit() }} </td>
+                <td>{{ ingredient.getUsedByDate().format('jS M Y') }} </td>
+                <td>{{ ingredient.getUsedByDateInterval() }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+
+{% endif %}
