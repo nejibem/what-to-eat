@@ -1,11 +1,7 @@
 nejibem_whattoeat_homepage:
     pattern:  /
-    defaults: { _controller: NejibemWhattoeatBundle:Default:index }
+    defaults: { _controller: NejibemWhattoeatBundle:Default:whattoeat }
 
 nejibem_whattoeat_recipes:
     pattern:  /recipes
     defaults: { _controller: NejibemWhattoeatBundle:Default:recipes }
-
-nejibem_whattoeat_whattoeat:
-    pattern:  /whattoeat
-    defaults: { _controller: NejibemWhattoeatBundle:Default:whattoeat }

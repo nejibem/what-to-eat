@@ -11,10 +11,6 @@ use Nejibem\WhattoeatBundle\Entity\Recipe;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
-    {
-        return $this->render('NejibemWhattoeatBundle:Default:index.html.twig');
-    }
 
     public function recipesAction()
     {
