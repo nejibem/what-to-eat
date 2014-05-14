@@ -43,7 +43,9 @@ class DefaultController extends Controller
 
     public function whattoeatAction(Request $request)
     {
-        $ingredients = null;
+        $availableIngredients = null;
+        $recommended = null;
+
         $form = $this->createFormBuilder()
             ->add('ingredients_file', 'file', array('label' => 'Ingredients File to Submit'))
             ->add('add', 'submit')
@@ -56,23 +58,29 @@ class DefaultController extends Controller
             {
                 $file = $form->get('ingredients_file');
                 $fileData = $file->getData()->openFile('r');
-                $ingredients = $this->parseIngredients($fileData);
+                $availableIngredients = $this->parseAvailableIngredients($fileData);
             }
         }
 
-        $recipies = $this->fetchRecipies();
-        $this->determineRecommendedRecipe( $ingredients, $recipies );
+        if( !$availableIngredients )
+        {
+            $availableIngredients = array();
+        }
 
-        $params = array( 'form'        => $form->createView(),
-                         'ingredients' => $ingredients,
-                         'recipies'    => $recipies,
+        $recipies = $this->fetchRecipies( $availableIngredients );
+        $recommended = Recipe::calcWhatToEat($recipies);
+
+        $params = array( 'form'                 => $form->createView(),
+                         'availableIngredients' => $availableIngredients,
+                         'recipies'             => $recipies,
+                         'recommended'          => $recommended,
                         );
 
         return $this->render('NejibemWhattoeatBundle:Default:whattoeat.html.twig', $params );
     }
 
 
-    public function parseIngredients( $file )
+    public function parseAvailableIngredients( $file )
     {
         $ingredients = [];
         while (!$file->eof()) {
@@ -88,7 +96,7 @@ class DefaultController extends Controller
         return $ingredients;
     }
 
-    public function fetchRecipies()
+    public function fetchRecipies($availableIngredients)
     {
         $client = new Client('http://symfony.dev/recipes', array(
             'adapter' => 'Zend\Http\Client\Adapter\Curl'
@@ -102,11 +110,13 @@ class DefaultController extends Controller
         {
             $recipe = new Recipe();
             $recipe->setName( $recipeObj->name );
+            $recipe->setIngredientsAvailable( $availableIngredients );
+
             foreach( $recipeObj->ingredients as $ingredientObj )
             {
                 $ingredient = new Ingredient();
                 $ingredient->setName( $ingredientObj->item );
-                $ingredient->getQuantity( $ingredientObj->amount );
+                $ingredient->setQuantity( $ingredientObj->amount );
                 $ingredient->setUnit( $ingredientObj->unit );
                 $recipe->addIngredient( $ingredient );
             }
@@ -114,11 +124,6 @@ class DefaultController extends Controller
         }
 
         return $recipies;
-    }
-
-    public function determineRecommendedRecipe( $ingredients, $recipies )
-    {
-
     }
 
 

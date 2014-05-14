@@ -173,11 +173,16 @@ class Recipe {
 
         if( count($maybeEat) > 1 )
         {
-            return recipe::calcRecipeWithClosestUsedByDateIngredient( $maybeEat );
+            $recipe = recipe::calcRecipeWithClosestUsedByDateIngredient( $maybeEat );
+            $recipe->setRecommended(true);
+            return $recipe;
+
         }
         elseif( count($maybeEat) == 1 )
         {
-            return $maybeEat[0];
+            $recipe = $maybeEat[0];
+            $recipe->setRecommended(true);
+            return $recipe;
         }
         else
         {

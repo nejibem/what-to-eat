@@ -2,19 +2,52 @@ whattoeat!
 
 {{ form(form) }}
 
+<h2>What Should I Eat?
+    {% if recommended %}
+        <span class="recommended">{{ recommended.getName() }}</span>
+    {% elseif recommended is null %}
+
+    {% elseif recommended == false %}
+        <span class="recommended">Order Takeout</span>
+    {% endif %}
+</h2>
+
 <h2>Recipies</h2>
 
 {% if recipies is not null %}
 
     {% for recipe in recipies %}
-        <h3>{{ recipe.getName() }}</h3>
+        <h3>
+            {{ recipe.getName() }}
+            {% if recipe.recommended() %}
+                :: Eat This!
+            {% endif %}
+        </h3>
+
+        {% if recipe.getIngredients() is not null %}
+            <table class="table table-bordered">
+                <tr>
+                    <th>Ingredient</th>
+                    <th>Quantity</th>
+                    <th>Unit</th>
+                </tr>
+                {% for ingredient in recipe.getIngredients() %}
+                    <tr>
+                        <td>{{ ingredient.getName() }} </td>
+                        <td>{{ ingredient.getQuantity() }} </td>
+                        <td>{{ ingredient.getUnit() }} </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+
     {% endfor %}
 
 {% endif %}
 
 <h2>Ingredients</h2>
 
-{% if ingredients is not null %}
+{% if availableIngredients is not null %}
     <table class="table table-bordered">
         <tr>
             <th>Ingredient</th>
@@ -22,17 +55,13 @@ whattoeat!
             <th>Unit</th>
             <th>Used By Date</th>
         </tr>
-        {% for ingredient in ingredients %}
+        {% for availableIngredient in availableIngredients %}
             <tr>
-                <td>{{ ingredient.getName() }} </td>
-                <td>{{ ingredient.getQuantity() }} </td>
-                <td>{{ ingredient.getUnit() }} </td>
-                <td>{{ ingredient.getUsedByDate().format('jS M Y') }} </td>
-                <td>{{ ingredient.getUsedByDateInterval() }}</td>
+                <td>{{ availableIngredient.getName() }} </td>
+                <td>{{ availableIngredient.getQuantity() }} </td>
+                <td>{{ availableIngredient.getUnit() }} </td>
+                <td>{{ availableIngredient.getUsedByDate().format('jS M Y') }} </td>
             </tr>
         {% endfor %}
     </table>
-
-
-
 {% endif %}
